@@ -1,5 +1,5 @@
 package model;
 
 public enum Category {
-    PASTA, BREAKFAST, SALADS, DESSERTS
+    PASTA, MEXICAN, BREAKFAST, SALADS, DESSERTS
 }
