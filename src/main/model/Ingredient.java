@@ -1,23 +1,47 @@
 package model;
 
-// Represents an ingredient with a name and an expiry date
+// Represents an ingredient with a name and the amount of it; it can be marked as to buy
 public class Ingredient {
-    private String name;    // name of ingredient
-    private String expiryDate; // date of expiration of ingredient in the year 2023
+    private final String name;    // name of ingredient
+    private int amount;           // amount of ingredient
+    private boolean toBuy;        // true if ingredient is marked as toBuy; false otherwise
 
-    // REQUIRES: ingredient name has a non-zero length, expiryDate > 0101 and is in the year 2023
-    // EFFECTS: creates a new ingredient; sets name of ingredient to given name; sets expiry date of
-    // ingredient to given expiry date
-    public Ingredient(String name, String expiryDate) {
-
+    // REQUIRES: ingredient name has a non-zero length, amount > 0
+    // EFFECTS: creates a new ingredient; sets name of ingredient to given name; sets amount
+    // of ingredient to given amount; sets toBuy to false
+    public Ingredient(String name, int amount) {
+        this.name = name;
+        this.amount = amount;
+        this.toBuy = false;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
-    public String getExpiryDate() {
-        return null;
+    public int getAmount() {
+        return amount;
     }
 
+    public boolean getToBuy() {
+        return toBuy;
+    }
+
+    public void setToBuyTrue() {
+        this.toBuy = true;
+    }
+
+    // REQUIRES: add > 0
+    // MODIFIES: this
+    // EFFECTS: adds given amount to ingredient's amount
+    public void addAmount(int add) {
+        this.amount += add;
+    }
+
+    // REQUIRES: 0 < subtract < amount
+    // MODIFIES: this
+    // EFFECT: subtracts given amount from ingredient's amount
+    public void subtractAmount(int subtract) {
+        this.amount -= subtract;
+    }
 }
