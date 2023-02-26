@@ -24,13 +24,13 @@ public class Pantry {
         }
     }
 
-    // REQUIRES: ingredient with the same name as the one given must be in the pantry;
-    // pantry must not be empty; 0 < amount <= amount of ingredient in pantry
+    // REQUIRES: ingredient with the same name as the one given must be in the pantry
+    // and pantry must not be empty
     // MODIFIES: this
     // EFFECTS: subtracts given amount from amount of ingredient with the same name from pantry;
-    // removes the ingredient altogether if amount of ingredient in pantry = given amount
+    // removes the ingredient altogether if amount of ingredient in pantry <= given amount
     public void removeIngredient(String ingredientName, int amount) {
-        if (amount == getIngredientAtIndex(getIndex(ingredientName)).getAmount()) {
+        if (amount >= getIngredientAtIndex(getIndex(ingredientName)).getAmount()) {
             pantry.remove(getIndex(ingredientName));
         } else {
             getIngredientAtIndex(getIndex(ingredientName)).subtractAmount(amount);
@@ -78,10 +78,11 @@ public class Pantry {
     // EFFECTS: returns true if amount of ingredient with same name in pantry >= amount,
     // otherwise returns false
     public boolean doesPantryHaveEnough(String ingredientName, int amount) {
-        if ((getIngredientAtIndex(getIndex(ingredientName)).getAmount()) >= amount) {
+        if (getIngredientAtIndex(getIndex(ingredientName)).getAmount() >= amount) {
             return true;
         } else {
             return false;
         }
     }
 }
+

@@ -5,6 +5,7 @@ import model.Meal;
 import model.Pantry;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import static model.Category.*;
 
 // Meal Suggestion Application
 public class MealSuggestionApp {
-    private Pantry pantry;
+    private Pantry newPantry;
     private Meal lobsterPasta;
     private Meal tofuSalad;
     private Meal tiramisu;
@@ -63,10 +64,38 @@ public class MealSuggestionApp {
     private Ingredient balsamicVinegar;
     private List<Meal> allMeals = new ArrayList<>();
     private Scanner input;
+    private List<Meal> newMeals = new ArrayList<>();
 
     // EFFECTS: runs the recipe suggestion application
     public MealSuggestionApp() {
         runMealSuggestion();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user input
+    private void runMealSuggestion() {
+        boolean keepGoing = true;
+        String command = null;
+
+        initIngredients();
+        initAddIngredientsToMealIngredientListsOne();
+        initAddIngredientsToMealIngredientListsTwo();
+        initMealsScannerPantry();
+        initListOfMeals();
+        setAllIngredientLists();
+
+        while (keepGoing) {
+            displayMenu();
+            command = input.nextLine();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommand(command);
+            }
+        }
+        System.out.println("Goodbye!");
     }
 
     // MODIFIES: this
@@ -162,8 +191,8 @@ public class MealSuggestionApp {
         chickenCaesar = new Meal("dairy-free chicken caesar salad", SALADS, 45);
         capriSalad = new Meal("gluten-free capri salad", SALADS, 10);
         input = new Scanner(System.in);
-        input.useDelimiter(",");
-        pantry = new Pantry();
+        input.useDelimiter("\n");
+        newPantry = new Pantry();
     }
 
     // MODIFIES: this
@@ -201,11 +230,11 @@ public class MealSuggestionApp {
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
-        System.out.println("Welcome!");
-        System.out.println(",To add an item to your pantry, enter a.");
-        System.out.println(",To remove an item from your pantry, enter r.");
-        System.out.println(",To search for a meal suggestion, enter s.");
-        System.out.println(",To quit the app, enter q.");
+        System.out.println("\nWelcome!");
+        System.out.println("\tTo add an item to your pantry, enter a.");
+        System.out.println("\tTo remove an item from your pantry, enter r.");
+        System.out.println("\tTo search for a meal suggestion, enter s.");
+        System.out.println("\tTo quit the app, enter q.");
     }
 
     // MODIFIES: this
@@ -213,16 +242,13 @@ public class MealSuggestionApp {
     private void processCommand(String command) {
         if (command.equals("a")) {
             doAddToPantry();
-        } else if  (command.equals("r")) {
+        } else if (command.equals("r")) {
             doRemoveFromPantry();
-        } else if  (command.equals("s")) {
+        } else if (command.equals("s")) {
             filterCookingTime();
             filterDietaryRestrictions();
-            userMakeMealAndWillUserRateMealAndUnlockDessert();
-
-
-        } else {
-            System.out.println("The selection is not valid.");
+            filterPantryItems();
+            userMakeMeal();
         }
     }
 
@@ -231,14 +257,14 @@ public class MealSuggestionApp {
     private void doAddToPantry() {
         System.out.println("What is the name of the item you would like to add to your pantry?");
         String name = input.nextLine();
-        System.out.println("How many of these items would you like to add to your pantry?");
+        System.out.println("How many of these items would you like to add to your pantry?\n");
         int amount = input.nextInt();
         if (amount <= 0) {
-            System.out.println("The amount entered must be greater than 0.");
+            System.out.println("The amount entered must be greater than 0.\n");
         } else {
-            Ingredient ingredient = new Ingredient(name, amount);
-            pantry.addIngredient(ingredient);
-            System.out.println(amount + "units of " + name + "have been successfully added to your pantry!");
+            Ingredient ing = new Ingredient(name, amount);
+            newPantry.addIngredient(ing);
+            System.out.println(amount + " units of " + name + " have been successfully added to your pantry!\n");
         }
     }
 
@@ -247,48 +273,110 @@ public class MealSuggestionApp {
     // ingredient with name specified by user is in the pantry, otherwise prints out "there is no ingredient with
     // the name (name entered by user) in your pantry"
     private void doRemoveFromPantry() {
-        System.out.println("What is the name of the item you would like to remove from your pantry?");
+        System.out.println("What is the name of the item you would like to remove from your pantry?\n");
         String name = input.nextLine();
-        if (pantry.doesPantryContain(name)) {
-            System.out.println("How many of these items would you like to remove from your pantry?");
+        if (newPantry.doesPantryContain(name)) {
+            System.out.println("How many of these items would you like to remove from your pantry?\n");
             int amount = input.nextInt();
-            pantry.removeIngredient(name, amount);
-            System.out.println(amount + "units of" + name + "were successfully removed from your pantry!");
+            newPantry.removeIngredient(name, amount);
+            System.out.println(amount + " units of " + name + " were successfully removed from your pantry!\n");
         } else {
-            System.out.println("There is no ingredient with the name" + name + "in your pantry.")
+            System.out.println("There is no ingredient with the name " + name + " in your pantry.\n");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: displays menu of category options to user
-    private void displayCategoryMenu() {
-        System.out.print
+    // EFFECTS: filters the list of available meal suggestions based on the cooking time entered by the user
+    private void filterCookingTime() {
+        System.out.println("How much time do you have to cook?\n");
+        int amount = input.nextInt();
+        if (amount < 10) {
+            System.out.println("The cooking time entered must be greater than or equal to 10.\n");
+        } else {
+            allMeals.removeIf(meal -> meal.getCookTime() > amount);
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // MODIFIES: this
+    // EFFECTS: filters list of available meals based on the user's dietary restrictions
+    private void filterDietaryRestrictions() {
+        System.out.println("Do you have any dietary restrictions? Select up to one option.");
+        System.out.println("If you are vegetarian, enter 1.");
+        System.out.println("If you are vegan, enter 2.");
+        System.out.println("If you are dairy-free, enter 3.");
+        System.out.println("If you are gluten-free, enter 4.");
+        System.out.println("If you do not have any dietary restrictions, enter 0.");
+        int restriction = input.nextInt();
+        if (restriction == 1) {
+            allMeals.removeIf(meal -> !meal.isVegetarian());
+        } else if (restriction == 2) {
+            allMeals.removeIf(meal -> !meal.isVegan());
+        } else if (restriction == 3) {
+            allMeals.removeIf(meal -> !meal.isDairyFree());
+        } else if (restriction == 4) {
+            allMeals.removeIf(meal -> !meal.isGlutenFree());
+        } else if (!(restriction == 0)) {
+            System.out.println("The selection is not valid.\n");
+        }
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: filters the list of meals based on what user has in their pantry
+    private void filterPantryItems() {
+        if (newPantry.getPantrySize() < 3) {
+            System.out.println("You must add more items to your pantry to make a meal.");
+        } else {
+            Iterator<Meal> mealIterator = allMeals.iterator();
+            while (mealIterator.hasNext()) {
+                Meal m = mealIterator.next();
+                Iterator<Ingredient> ingredientIterator = m.getIngredients().iterator();
+                Ingredient i = ingredientIterator.next();
+                while (ingredientIterator.hasNext()) {
+                    if ((newPantry.doesPantryContain(i.getName())) &&
+                            (newPantry.doesPantryHaveEnough(i.getName(), i.getAmount()))) {
+                        newMeals.add(m);
+                    }
+                }
+            }
+        }
+    }
 
+    // MODIFIES: this
+    // EFFECTS: user picks meal they want to make and the ingredients list for the selected meal is displayed;
+    // prints out "you do not have enough items in your pantry to make any of the meals
+    //  that match your preferences." otherwise
+    private void userMakeMeal() {
+        if (newMeals.isEmpty()) {
+            System.out.println("You do not have enough items in your pantry to make any of the meals that "
+                    + "match your preferences.");
+        } else {
+            System.out.println("Which meal would you like to make? Enter the meal name.");
+            for (Meal m : allMeals) {
+                System.out.println("/" + m.getName() + ", cooking time:" + m.getCookTime());
+            }
+            String mealName = input.nextLine();
+            System.out.println("Would you like to rate this meal? Enter a rating from 1 to 5 to"
+                    + "receive a free dessert suggestion!");
+            int userRating = input.nextInt();
+            for (Meal m : allMeals) {
+                if (m.getName().equals(mealName)) {
+                    m.setRating(userRating);
+                }
+            }
+            userAccessDessert();
+        }
+    }
 
-
-
-
-
-
-
+    // MODIFIES: this
+    // EFFECTS: allows user to access dessert suggestion
+    private void userAccessDessert() {
+        tiramisu.setUnlocked();
+        System.out.println("You unlocked a dessert suggestion!");
+        System.out.println("/" + tiramisu.getName() + ", cooking time:" + tiramisu.getCookTime());
+        for (Ingredient i : tiramisuIngredients) {
+            System.out.println("/Ingredients needed:");
+            System.out.print("/" + i.getName() + "amount:" + i.getAmount());
+        }
+    }
 }
