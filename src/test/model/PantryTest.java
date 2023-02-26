@@ -143,35 +143,6 @@ public class PantryTest {
     }
 
     @Test
-    public void testDoesPantryHaveEnoughPantryHasEnough() {
-        testPantry.addIngredient(testIngredient1);
-        testPantry.addIngredient(testIngredient2);
-        testPantry.addIngredient(testIngredient3);
-        assertTrue(testPantry.doesPantryHaveEnough("tomatoes", 2));
-        assertTrue(testPantry.doesPantryHaveEnough("cherries", 1));
-    }
-
-    @Test
-    public void testDoesPantryHaveEnoughPantryHasJustEnough() {
-        testPantry.addIngredient(testIngredient1);
-        testPantry.addIngredient(testIngredient2);
-        testPantry.addIngredient(testIngredient3);
-        assertTrue(testPantry.doesPantryHaveEnough("tomatoes", 3));
-        assertTrue(testPantry.doesPantryHaveEnough("cherries", 2));
-        assertTrue(testPantry.doesPantryHaveEnough("bread", 1));
-    }
-
-    @Test
-    public void testDoesPantryHaveEnoughPantryDoesNotHaveEnough() {
-        testPantry.addIngredient(testIngredient1);
-        testPantry.addIngredient(testIngredient2);
-        testPantry.addIngredient(testIngredient3);
-        assertFalse(testPantry.doesPantryHaveEnough("tomatoes", 4));
-        assertFalse(testPantry.doesPantryHaveEnough("cherries", 4));
-        assertFalse(testPantry.doesPantryHaveEnough("bread", 4));
-    }
-
-    @Test
     public void testGetIngredientNamesAddOneIngredient() {
         testPantry.addIngredient(testIngredient1);
         assertEquals(ingredientNames, testPantry.getIngredientNames(ingredientNames));

@@ -14,10 +14,11 @@ public class Pantry {
         pantry = new ArrayList<>();
     }
 
+    // REQUIRES: ingredient name must have non-zero length and amount > 0
     // MODIFIES: this
     // EFFECTS: adds amount of given ingredient to amount of the ingredient already in
     //  the pantry if an ingredient with the same name
-    //  is already in the pantry; adds given ingredient to pantry otherwise
+    //  is already in the pantry; adds new ingredient with given name and amount to pantry otherwise
     public void addIngredient(Ingredient ingredient) {
         if (this.doesPantryContain(ingredient.getName())) {
             getIngredientAtIndex(this.getIndex(ingredient.getName())).addAmount(ingredient.getAmount());
@@ -40,6 +41,7 @@ public class Pantry {
     }
 
 
+    // REQUIRES: ingredientName must be of non-zero length
     // EFFECTS: returns position in pantry of ingredient in pantry with the same name, otherwise returns -1
     public int getIndex(String ingredientName) {
         for (Ingredient i : pantry) {
@@ -73,18 +75,6 @@ public class Pantry {
             }
         }
         return false;
-    }
-
-    // REQUIRES: pantry must not be empty; an ingredient with the given name must be in the pantry;
-    // ingredientName has a non-zero length; amount > 0
-    // EFFECTS: returns true if amount of ingredient with same name in pantry >= amount,
-    // otherwise returns false
-    public boolean doesPantryHaveEnough(String ingredientName, int amount) {
-        if (getIngredientAtIndex(getIndex(ingredientName)).getAmount() >= amount) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     // REQUIRES: pantry must not be empty

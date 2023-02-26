@@ -73,7 +73,7 @@ public class PantryApp {
         } else if (command.equals("m")) {
             doMarkItemAsToBuy();
         } else {
-            System.out.println("The selection is not valid.");
+            System.out.println("The selection is not valid.\n");
         }
     }
 
@@ -90,25 +90,39 @@ public class PantryApp {
             Ingredient ing = new Ingredient(name, amount);
             newPantry.addIngredient(ing);
             System.out.println(amount + " units of " + name + " have been successfully added to your pantry!\n");
+            int newAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
+            System.out.println("You now have " + newAmount + " units of " + name + " in your pantry.\n");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: removes amount, entered by the user, of a certain ingredient from pantry if
-    // ingredient with name specified by user is in the pantry, otherwise prints out "there is no ingredient with
-    // the name (name entered by user) in your pantry"
+    // EFFECTS: performs removal of an amount, specified by user , of ingredient in pantry
     private void doRemoveFromPantry() {
         System.out.println("What is the name of the item you would like to remove from your pantry?\n");
         String name = input.nextLine();
         if (newPantry.doesPantryContain(name)) {
             System.out.println("How many of these items would you like to remove from your pantry?\n");
             int amount = input.nextInt();
-            newPantry.removeIngredient(name, amount);
-            System.out.println(amount + " units of " + name + " were successfully removed from your pantry!\n");
+            int realAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
+            if (realAmount < amount) {
+                System.out.println("You only have " + realAmount + " units of " + name + " in your pantry."
+                        + " You cannot remove more than what you have.");
+            } else if (realAmount >= amount) {
+                newPantry.removeIngredient(name, amount);
+                System.out.println(amount + " units of " + name + " were successfully removed from your pantry!\n");
+                boolean wasItemFullyRemoved = newPantry.doesPantryContain(name);
+                if (wasItemFullyRemoved) {
+                    int newRealAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
+                    System.out.println("You now have " + newRealAmount + " units of " + name + " left in your pantry.");
+                } else {
+                    System.out.println("You now have 0 units of " + name + " left in your pantry.");
+                }
+            }
         } else {
             System.out.println("There is no ingredient with the name " + name + " in your pantry.\n");
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: prints a list of names of all ingredients currently in the user's pantry
