@@ -86,12 +86,14 @@ public class PantryApp {
         int amount = input.nextInt();
         if (amount <= 0) {
             System.out.println("The amount entered must be greater than 0.\n");
+            input.nextLine();
         } else {
             Ingredient ing = new Ingredient(name, amount);
             newPantry.addIngredient(ing);
             System.out.println(amount + " units of " + name + " have been successfully added to your pantry!\n");
             int newAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
             System.out.println("You now have " + newAmount + " units of " + name + " in your pantry.\n");
+            input.nextLine();
         }
     }
 
@@ -105,13 +107,13 @@ public class PantryApp {
             int amount = input.nextInt();
             int realAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
             if (realAmount < amount) {
-                System.out.println("You only have " + realAmount + " units of " + name + " in your pantry."
-                        + " You cannot remove more than what you have.");
+                System.out.println("You only have " + realAmount + " units of " + name + " in your pantry.");
+                input.nextLine();
             } else if (realAmount >= amount) {
                 newPantry.removeIngredient(name, amount);
                 System.out.println(amount + " units of " + name + " were successfully removed from your pantry!\n");
-                boolean wasItemFullyRemoved = newPantry.doesPantryContain(name);
-                if (wasItemFullyRemoved) {
+                input.nextLine();
+                if (newPantry.doesPantryContain(name)) {
                     int newRealAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
                     System.out.println("You now have " + newRealAmount + " units of " + name + " left in your pantry.");
                 } else {
