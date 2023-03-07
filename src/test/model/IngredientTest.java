@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Ingredient Test Class
 public class IngredientTest {
     private Ingredient testIngredient;
 

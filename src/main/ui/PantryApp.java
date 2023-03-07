@@ -11,11 +11,11 @@ import java.util.Scanner;
 // Pantry Application
 public class PantryApp {
     private Pantry newPantry;
-    private List<String> ingredientNames = new ArrayList<>();
+    private List<String> ingredientNames = new ArrayList<>();  // a list of names of ingredients in the user's pantry
     private final List<String> groceryList = new ArrayList<>();
     private Scanner input;
 
-    // EFFECTS: runs the recipe suggestion application
+    // EFFECTS: runs the pantry application
     public PantryApp() {
         runPantryApplication();
     }
@@ -69,7 +69,7 @@ public class PantryApp {
         } else if (command.equals("r")) {
             doRemoveFromPantry();
         } else if (command.equals("s")) {
-            doPrintAllPantryItems();
+            doPrintAllIngredientNames();
         } else if (command.equals("m")) {
             doMarkItemAsToBuy();
         } else {
@@ -79,6 +79,7 @@ public class PantryApp {
 
     // MODIFIES: this
     // EFFECTS: adds ingredient to pantry using the ingredient name and amount entered by user
+    // and adds ingredient name to ingredientNames if it is not already in the list
     private void doAddToPantry() {
         System.out.println("What is the name of the item you would like to add to your pantry?");
         String name = input.nextLine();
@@ -90,6 +91,9 @@ public class PantryApp {
         } else {
             Ingredient ing = new Ingredient(name, amount);
             newPantry.addIngredient(ing);
+            if (!ingredientNames.contains(name)) {
+                ingredientNames.add(name);
+            }
             System.out.println(amount + " units of " + name + " have been successfully added to your pantry!\n");
             int newAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
             System.out.println("You now have " + newAmount + " units of " + name + " in your pantry.\n");
@@ -98,7 +102,8 @@ public class PantryApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: performs removal of an amount, specified by user , of ingredient in pantry
+    // EFFECTS: removes ingredient from pantry using the ingredient name and amount entered by user
+    // and removes ingredient name from ingredientNames if the new ingredient amount in the pantry equals 0
     private void doRemoveFromPantry() {
         System.out.println("What is the name of the item you would like to remove from your pantry?\n");
         String name = input.nextLine();
@@ -109,7 +114,7 @@ public class PantryApp {
             if (realAmount < amount) {
                 System.out.println("You only have " + realAmount + " units of " + name + " in your pantry.");
                 input.nextLine();
-            } else if (realAmount >= amount) {
+            } else {
                 newPantry.removeIngredient(name, amount);
                 System.out.println(amount + " units of " + name + " were successfully removed from your pantry!\n");
                 input.nextLine();
@@ -117,6 +122,7 @@ public class PantryApp {
                     int newRealAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
                     System.out.println("You now have " + newRealAmount + " units of " + name + " left in your pantry.");
                 } else {
+                    ingredientNames.remove(name);
                     System.out.println("You now have 0 units of " + name + " left in your pantry.");
                 }
             }
@@ -127,13 +133,13 @@ public class PantryApp {
 
 
     // MODIFIES: this
-    // EFFECTS: prints a list of names of all ingredients currently in the user's pantry
-    private void doPrintAllPantryItems() {
+    // EFFECTS: prints out all the elements of ingredientNames
+    private void doPrintAllIngredientNames() {
         if (newPantry.getPantrySize() == 0) {
             System.out.println("There are currently no items in your pantry.");
         } else {
             System.out.println("Here is a list of the names of all of the items currently in your pantry:");
-            for (String s : newPantry.getIngredientNames(ingredientNames)) {
+            for (String s : ingredientNames) {
                 System.out.println(s);
             }
         }

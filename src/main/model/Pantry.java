@@ -5,9 +5,9 @@ import java.util.List;
 
 // Represents a pantry that has a list of ingredients
 public class Pantry {
-    private final List<Ingredient> pantry;
-    private final List<String> ingredientNames = new ArrayList<>();
-    private final List<String> groceryList = new ArrayList<>();
+    private final List<Ingredient> pantry;                           // a pantry which stores ingredients
+    private final List<String> groceryList = new ArrayList<>();      // list of the names of the ingredients
+                                                                     // marked 'TO BUY' by the user
 
     // EFFECTS: creates a new pantry with no ingredients added
     public Pantry() {
@@ -15,10 +15,10 @@ public class Pantry {
     }
 
     // REQUIRES: ingredient name must have non-zero length and amount > 0
-    // MODIFIES: this
+    // MODIFIES: this, ingredientNames
     // EFFECTS: adds amount of given ingredient to amount of the ingredient already in
     //  the pantry if an ingredient with the same name
-    //  is already in the pantry; adds new ingredient with given name and amount to pantry otherwise
+    //  is already in the pantry; otherwise it adds new ingredient with given name and amount to pantry
     public void addIngredient(Ingredient ingredient) {
         if (this.doesPantryContain(ingredient.getName())) {
             getIngredientAtIndex(this.getIndex(ingredient.getName())).addAmount(ingredient.getAmount());
@@ -30,8 +30,9 @@ public class Pantry {
     // REQUIRES: ingredient with the same name as the one given must be in the pantry
     // and pantry must not be empty
     // MODIFIES: this
-    // EFFECTS: subtracts given amount from amount of ingredient with the same name from pantry;
-    // removes the ingredient altogether if amount of ingredient in pantry <= given amount
+    // EFFECTS: subtracts given amount from amount of ingredient with the same name from pantry
+    // if amount of ingredient in pantry > given amount, otherwise it removes the ingredient from
+    // the pantry altogether
     public void removeIngredient(String ingredientName, int amount) {
         if (amount >= getIngredientAtIndex(getIndex(ingredientName)).getAmount()) {
             pantry.remove(getIndex(ingredientName));
@@ -75,15 +76,6 @@ public class Pantry {
             }
         }
         return false;
-    }
-
-    // REQUIRES: pantry must not be empty
-    // EFFECTS: adds all names of ingredients currently in the pantry to the given list
-    public List<String> getIngredientNames(List<String> ingredientNames) {
-        for (Ingredient i : pantry) {
-            ingredientNames.add(i.getName());
-        }
-        return ingredientNames;
     }
 
     // REQUIRES: pantry is not empty

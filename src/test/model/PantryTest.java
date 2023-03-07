@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+// Pantry Test Class
 public class PantryTest {
     private Pantry testPantry;
     private Ingredient testIngredient1;
@@ -140,35 +140,6 @@ public class PantryTest {
         assertTrue(testPantry.doesPantryContain("bread"));
         assertFalse(testPantry.doesPantryContain("hungry"));
         assertFalse(testPantry.doesPantryContain("arugula"));
-    }
-
-    @Test
-    public void testGetIngredientNamesAddOneIngredient() {
-        testPantry.addIngredient(testIngredient1);
-        assertEquals(ingredientNames, testPantry.getIngredientNames(ingredientNames));
-        assertEquals(1, ingredientNames.size());
-        assertEquals("tomatoes", ingredientNames.get(0));
-    }
-
-    @Test
-    public void testGetIngredientNamesAddSameIngredientTwice() {
-        testPantry.addIngredient(testIngredient1);
-        testPantry.addIngredient(testIngredient1);
-        assertEquals(ingredientNames, testPantry.getIngredientNames(ingredientNames));
-        assertEquals(1, ingredientNames.size());
-        assertEquals("tomatoes", ingredientNames.get(0));
-    }
-
-    @Test
-    public void testGetIngredientNamesAddMultipleIngredients() {
-        testPantry.addIngredient(testIngredient1);
-        testPantry.addIngredient(testIngredient2);
-        testPantry.addIngredient(testIngredient3);
-        assertEquals(ingredientNames, testPantry.getIngredientNames(ingredientNames));
-        assertEquals(3, ingredientNames.size());
-        assertEquals("tomatoes", ingredientNames.get(0));
-        assertEquals("cherries", ingredientNames.get(1));
-        assertEquals("bread", ingredientNames.get(2));
     }
 
     @Test
