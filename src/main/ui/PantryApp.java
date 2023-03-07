@@ -122,8 +122,7 @@ public class PantryApp {
                     int newRealAmount = newPantry.getIngredientAtIndex(newPantry.getIndex(name)).getAmount();
                     System.out.println("You now have " + newRealAmount + " units of " + name + " left in your pantry.");
                 } else {
-                    ingredientNames.remove(name);
-                    System.out.println("You now have 0 units of " + name + " left in your pantry.");
+                    removeFromIngredientNamesAndPrint(name);
                 }
             }
         } else {
@@ -131,6 +130,14 @@ public class PantryApp {
         }
     }
 
+    // REQUIRES: pantry must not contain an ingredient with the given name
+    // MODIFIES: this
+    // EFFECTS: removes given name from ingredientNames and prints out "You now have 0 units of (given name)
+    // left in your pantry."
+    private void removeFromIngredientNamesAndPrint(String ingredientName) {
+        ingredientNames.remove(ingredientName);
+        System.out.println("You now have 0 units of " + ingredientName + " left in your pantry.");
+    }
 
     // MODIFIES: this
     // EFFECTS: prints out all the elements of ingredientNames

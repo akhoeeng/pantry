@@ -15,7 +15,7 @@ public class Pantry {
     }
 
     // REQUIRES: ingredient name must have non-zero length and amount > 0
-    // MODIFIES: this, ingredientNames
+    // MODIFIES: this
     // EFFECTS: adds amount of given ingredient to amount of the ingredient already in
     //  the pantry if an ingredient with the same name
     //  is already in the pantry; otherwise it adds new ingredient with given name and amount to pantry
