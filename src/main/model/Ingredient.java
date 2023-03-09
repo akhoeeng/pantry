@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import presistence.Writable;
+
 // Represents an ingredient with a name and the amount of it; it can be marked as to buy
-public class Ingredient {
+public class Ingredient implements Writable {
     private final String name;    // name of ingredient
     private int amount;           // amount of ingredient
     private boolean toBuy;        // true if ingredient is marked as toBuy; false otherwise
@@ -43,5 +46,12 @@ public class Ingredient {
     // EFFECT: subtracts given amount from ingredient's amount
     public void subtractAmount(int subtract) {
         this.amount -= subtract;
+    }
+
+    // REQUIRES: name must have a non-empty length and amount > 0
+    // EFFECTS: adds the ingredient name and its amount to a new JSON object, then returns it
+    @Override
+    public JSONObject toJson() {
+        return null;
     }
 }

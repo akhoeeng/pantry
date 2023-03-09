@@ -30,5 +30,5 @@ As a user, I want to be able to...
   of the ingredient
 - view a list of the names of all ingredients in my virtual pantry 
 - flag an ingredient in my pantry as "to buy" and add it to my grocery list
-- have the option to save my pantry and grocery list to file when I attempt to quit the application
-- have the option to load my pantry and grocery list from file when I start the application
+- have the option to save my pantry and grocery list to file 
+- have the option to load my pantry and grocery list from file 

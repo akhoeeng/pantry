@@ -2,7 +2,10 @@ package ui;
 
 import model.Ingredient;
 import model.Pantry;
+import presistence.JsonReader;
+import presistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,9 +17,12 @@ public class PantryApp {
     private List<String> ingredientNames = new ArrayList<>();  // a list of names of ingredients in the user's pantry
     private final List<String> groceryList = new ArrayList<>();
     private Scanner input;
+    private static final String JSON_STORE = "./data/pantry.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the pantry application
-    public PantryApp() {
+    public PantryApp() throws FileNotFoundException {
         runPantryApplication();
     }
 
@@ -26,7 +32,7 @@ public class PantryApp {
         boolean keepGoing = true;
         String command = null;
 
-        initScannerAndPantry();
+        initScannerPantryJson();
 
         while (keepGoing) {
             displayMenu();
@@ -44,11 +50,13 @@ public class PantryApp {
 
 
     // MODIFIES: this
-    // EFFECTS: initializes scanner and pantry
-    public void initScannerAndPantry() {
+    // EFFECTS: initializes scanner, pantry and json reader and writer
+    public void initScannerPantryJson() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         newPantry = new Pantry();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: displays menu of options to user
@@ -58,6 +66,8 @@ public class PantryApp {
         System.out.println("\tTo remove an item from your pantry, enter r.");
         System.out.println("\tTo see everything that you currently have in your pantry, enter s.");
         System.out.println("\tTo mark an item in your pantry as 'TO BUY', enter m.");
+        System.out.println("\tTo save your current pantry and grocery list, enter p.");
+        System.out.println("\tTo load your saved pantry and grocery list on file, press g.");
         System.out.println("\tTo quit the app, enter q.");
     }
 
@@ -72,6 +82,10 @@ public class PantryApp {
             doPrintAllIngredientNames();
         } else if (command.equals("m")) {
             doMarkItemAsToBuy();
+        } else if (command.equals("p")) {
+            doSavePantryToFile();
+        } else if (command.equals("g")) {
+            doLoadPantryFromFile();
         } else {
             System.out.println("The selection is not valid.\n");
         }
@@ -167,6 +181,15 @@ public class PantryApp {
         } else {
             System.out.println("This ingredient is not in your pantry.");
         }
+    }
+
+    // EFFECTS: saves the user's current pantry and grocery list to file
+    private void doSavePantryToFile() {
+    }
+
+    // EFFECTS: loads the pantry and grocery list from file
+    private void doLoadPantryFromFile() {
+
     }
 }
 

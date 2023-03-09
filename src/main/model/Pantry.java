@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import presistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a pantry that has a list of ingredients
-public class Pantry {
+public class Pantry implements Writable {
     private final List<Ingredient> pantry;                           // a pantry which stores ingredients
     private final List<String> groceryList = new ArrayList<>();      // list of the names of the ingredients
                                                                      // marked 'TO BUY' by the user
@@ -87,6 +91,23 @@ public class Pantry {
             }
         }
         return groceryList;
+    }
+
+    // EFFECTS: adds JSON array of ingredients currently in pantry and
+    // JSON array of names of ingredients currently marked as 'TO BUY' to a new JSON object then returns it
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
+
+    // EFFECTS: returns ingredients in this pantry as a JSON array
+    private JSONArray pantryToJson() {
+        return null;
+    }
+
+    // EFFECTS: returns list of ingredient names marked as 'TO BUY' as a JSON array
+    private JSONArray groceryListToJson() {
+        return null;
     }
 }
 
