@@ -4,17 +4,13 @@ import model.Pantry;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 // JSON Reader Test Class
 public class JsonReaderTest extends JsonHelperTest {
-    private List<String> groceryList1 = new ArrayList<>();
-    private List<String> groceryList2 = new ArrayList<>();
-    private List<String> groceryList3 = new ArrayList<>();
 
     @Test
     void testReaderNoFile() {
@@ -32,7 +28,7 @@ public class JsonReaderTest extends JsonHelperTest {
         try {
             Pantry pantry = reader.read();
             assertEquals(0, pantry.getPantrySize());
-            assertEquals(0, pantry.getGroceryList(groceryList1).size());
+            assertEquals(0, pantry.toBuyToGroceryList().size());
         } catch (IOException e) {
             fail("Couldn't read from file!");
         }
@@ -44,7 +40,7 @@ public class JsonReaderTest extends JsonHelperTest {
         try {
             Pantry pantry = reader.read();
             assertEquals(2, pantry.getPantrySize());
-            assertEquals(0, pantry.getGroceryList(groceryList2));
+            assertEquals(0, pantry.toBuyToGroceryList().size());
             checkIngredient("tomatoes", 3, pantry.getIngredientAtIndex(0));
             checkIngredient("pesto", 4, pantry.getIngredientAtIndex(1));
         } catch (IOException e) {
@@ -58,9 +54,9 @@ public class JsonReaderTest extends JsonHelperTest {
         try {
             Pantry pantry = reader.read();
             assertEquals(0, pantry.getPantrySize());
-            assertEquals(2, pantry.getGroceryList(groceryList3).size());
-            assertEquals("milk", pantry.getGroceryList(groceryList3).get(0));
-            assertEquals("cheese", pantry.getGroceryList(groceryList3).get(1));
+            assertEquals(2, pantry.toBuyToGroceryList().size());
+            assertEquals("milk", pantry.toBuyToGroceryList().get(0));
+            assertEquals("cheese", pantry.toBuyToGroceryList().get(1));
         } catch (IOException e) {
             fail("Couldn't read from file!");
         }
@@ -74,9 +70,9 @@ public class JsonReaderTest extends JsonHelperTest {
             assertEquals(2,pantry.getPantrySize());
             checkIngredient("tomatoes", 3, pantry.getIngredientAtIndex(0));
             checkIngredient("pesto", 4, pantry.getIngredientAtIndex(1));
-            assertEquals(2, pantry.getGroceryList(groceryList3).size());
-            assertEquals("milk", pantry.getGroceryList(groceryList3).get(0));
-            assertEquals("cheese", pantry.getGroceryList(groceryList3).get(1));
+            assertEquals(2, pantry.toBuyToGroceryList().size());
+            assertEquals("milk", pantry.toBuyToGroceryList().get(0));
+            assertEquals("cheese", pantry.toBuyToGroceryList().get(1));
         } catch (IOException e) {
             fail("Couldn't read from file!");
         }

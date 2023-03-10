@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class PantryApp {
     private Pantry newPantry;
     private List<String> ingredientNames = new ArrayList<>();  // a list of names of ingredients in the user's pantry
-    private final List<String> groceryList = new ArrayList<>();
     private Scanner input;
     private static final String JSON_STORE = "./data/pantry.json";
     private JsonWriter jsonWriter;
@@ -175,7 +174,7 @@ public class PantryApp {
             newPantry.getIngredientAtIndex(newPantry.getIndex(itemToBuy)).setToBuyTrue();
             System.out.println("The item " + itemToBuy + " was successfully marked as 'TO BUY'!");
             System.out.println("Your grocery list has been updated:");
-            for (String s : newPantry.getGroceryList(groceryList)) {
+            for (String s : newPantry.toBuyToGroceryList()) {
                 System.out.println(s);
             }
         } else {

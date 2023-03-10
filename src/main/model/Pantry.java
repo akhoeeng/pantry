@@ -10,12 +10,19 @@ import java.util.List;
 // Represents a pantry that has a list of ingredients
 public class Pantry implements Writable {
     private final List<Ingredient> pantry;                           // a pantry which stores ingredients
-    private final List<String> groceryList = new ArrayList<>();      // list of the names of the ingredients
-                                                                     // marked 'TO BUY' by the user
+    private final List<String> groceryList;                          // list of names of ingredients marked
+                                                                     // 'TO BUY' by the user; ingredients do not
+                                                                     //  have to currently be in the pantry
 
-    // EFFECTS: creates a new pantry with no ingredients added
+    // EFFECTS: creates a new pantry with no ingredients added and a new grocery list with no
+    // ingredient names added
     public Pantry() {
         pantry = new ArrayList<>();
+        groceryList = new ArrayList<>();
+    }
+
+    public List<String> getGroceryList() {
+        return this.groceryList;
     }
 
     // REQUIRES: ingredient name must have non-zero length and amount > 0
@@ -82,32 +89,45 @@ public class Pantry implements Writable {
         return false;
     }
 
-    // REQUIRES: pantry is not empty
-    // EFFECTS: adds ingredients marked to buy to the given grocery list and returns the grocery list
-    public List<String> getGroceryList(List<String> groceryList) {
+    // MODIFIES: this
+    // EFFECTS: adds ingredients marked to buy to the given grocery list without duplicates and returns it
+    public List<String> toBuyToGroceryList() {
         for (Ingredient i: pantry) {
-            if (i.getToBuy()) {
-                groceryList.add(i.getName());
+            if (i.getToBuy() && !this.groceryList.contains(i.getName())) {
+                this.groceryList.add(i.getName());
             }
         }
-        return groceryList;
+        return this.groceryList;
     }
 
     // EFFECTS: adds JSON array of ingredients currently in pantry and
     // JSON array of names of ingredients currently marked as 'TO BUY' to a new JSON object then returns it
     @Override
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("pantry", pantryToJson());
+        json.put("grocery list", groceryListToJson());
+        return json;
     }
 
     // EFFECTS: returns ingredients in this pantry as a JSON array
     private JSONArray pantryToJson() {
-        return null;
+        JSONArray pantryArray = new JSONArray();
+        for (Ingredient i : pantry) {
+            pantryArray.put(i.toJson());
+        }
+        return pantryArray;
     }
 
-    // EFFECTS: returns list of ingredient names marked as 'TO BUY' as a JSON array
+    // EFFECTS: returns grocery list as a JSON array
     private JSONArray groceryListToJson() {
-        return null;
+        JSONArray groceryListArray = new JSONArray();
+        for (String s : this.getGroceryList()) {
+            JSONObject groceryListItem = new JSONObject();
+            groceryListItem.put("name", s);
+            groceryListArray.put(groceryListItem);
+        }
+        return groceryListArray;
     }
 }
 

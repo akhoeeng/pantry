@@ -15,7 +15,6 @@ public class PantryTest {
     private Ingredient testIngredient2;
     private Ingredient testIngredient3;
     private final List<String> ingredientNames = new ArrayList<>();
-    private final List<String> groceryList = new ArrayList<>();
 
 
     @BeforeEach
@@ -149,9 +148,10 @@ public class PantryTest {
         testPantry.addIngredient(testIngredient3);
         testIngredient1.setToBuyTrue();
         testIngredient2.setToBuyTrue();
-        assertEquals(groceryList, testPantry.getGroceryList(groceryList));
-        assertEquals(2, groceryList.size());
-        assertEquals("tomatoes", groceryList.get(0));
-        assertEquals("cherries", groceryList.get(1));
+        assertEquals(testPantry.getGroceryList(), testPantry.toBuyToGroceryList());
+        assertEquals(2, testPantry.getGroceryList().size());
+        assertEquals("tomatoes", testPantry.getGroceryList().get(0));
+        assertEquals("cherries", testPantry.getGroceryList().get(1));
     }
+
 }

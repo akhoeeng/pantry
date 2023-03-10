@@ -11,12 +11,10 @@
   ],
   "grocery list": [
     {
-      "name": "milk",
-      "amount": 1
+      "name": "milk"
     },
     {
-      "name": "cheese",
-      "amount": 2
+      "name": "cheese"
     }
   ]
 }

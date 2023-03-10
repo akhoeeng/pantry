@@ -52,6 +52,9 @@ public class Ingredient implements Writable {
     // EFFECTS: adds the ingredient name and its amount to a new JSON object, then returns it
     @Override
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("amount", amount);
+        return json;
     }
 }
