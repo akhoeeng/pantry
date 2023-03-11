@@ -2,16 +2,22 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presistence.JsonReader;
+import presistence.JsonWriter;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 // Ingredient Test Class
 public class IngredientTest {
     private Ingredient testIngredient;
+    private Pantry testPantry;
 
     @BeforeEach
     public void setup() {
         testIngredient = new Ingredient("tomatoes", 3);
+        testPantry = new Pantry();
     }
 
     @Test
@@ -52,5 +58,26 @@ public class IngredientTest {
         testIngredient.setToBuyTrue();
         assertTrue(testIngredient.getToBuy());
     }
+
+    @Test
+    public void testToJson() {
+        try {
+            testPantry.addIngredient(testIngredient);
+            JsonWriter writer = new JsonWriter("./data/ingredientTestToJson.json");
+            writer.open();
+            writer.write(testPantry);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/ingredientTestToJson.json");
+            testPantry = reader.read();
+            assertEquals("tomatoes", testPantry.getIngredientAtIndex(0).getName());
+            assertEquals(3, testPantry.getIngredientAtIndex(0).getAmount());
+        } catch (IOException e) {
+            fail("Was not expecting IOException");
+        }
+
+    }
+
+
 
 }

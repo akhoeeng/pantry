@@ -2,7 +2,10 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presistence.JsonReader;
+import presistence.JsonWriter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class PantryTest {
     private Ingredient testIngredient1;
     private Ingredient testIngredient2;
     private Ingredient testIngredient3;
-    private final List<String> ingredientNames = new ArrayList<>();
+    private List<String> ingredientNames = new ArrayList<>();
 
 
     @BeforeEach
@@ -142,7 +145,7 @@ public class PantryTest {
     }
 
     @Test
-    public void testGetGroceryList() {
+    public void testToBuyToGroceryList() {
         testPantry.addIngredient(testIngredient1);
         testPantry.addIngredient(testIngredient2);
         testPantry.addIngredient(testIngredient3);
@@ -154,4 +157,94 @@ public class PantryTest {
         assertEquals("cherries", testPantry.getGroceryList().get(1));
     }
 
+    @Test
+    public void testMakeListOfNames() {
+        testPantry.addIngredient(testIngredient1);
+        testPantry.addIngredient(testIngredient2);
+        ingredientNames = testPantry.makeListOfNames();
+        assertEquals(2, ingredientNames.size());
+        assertTrue(ingredientNames.contains("tomatoes"));
+        assertTrue(ingredientNames.contains("cherries"));
+    }
+
+    @Test
+    public void testToJson() {
+        try {
+            testPantry.addIngredient(testIngredient1);
+            testPantry.addIngredient(testIngredient2);
+            testPantry.addIngredient(testIngredient3);
+            testIngredient1.setToBuyTrue();
+            testIngredient2.setToBuyTrue();
+            testIngredient3.setToBuyTrue();
+            assertEquals(3, testPantry.toBuyToGroceryList().size());
+            testPantry.removeIngredient("bread", 1);
+            JsonWriter writer = new JsonWriter("./data/pantryTestToJson.json");
+            writer.open();
+            writer.write(testPantry);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/pantryTestToJson.json");
+            testPantry = reader.read();
+            assertEquals(2, testPantry.getPantrySize());
+            assertTrue(testPantry.doesPantryContain("tomatoes"));
+            assertTrue(testPantry.doesPantryContain("cherries"));
+            assertFalse(testPantry.doesPantryContain("bread"));
+            assertEquals(3, testPantry.toBuyToGroceryList().size());
+            assertTrue(testPantry.toBuyToGroceryList().contains("tomatoes"));
+            assertTrue(testPantry.toBuyToGroceryList().contains("cherries"));
+            assertTrue(testPantry.toBuyToGroceryList().contains("bread"));
+        } catch (IOException e) {
+            fail("Was not expecting IOException");
+        }
+    }
+
+    @Test
+    public void testPantryToJson() {
+        try {
+            testPantry.addIngredient(testIngredient1);
+            testPantry.addIngredient(testIngredient2);
+            testPantry.addIngredient(testIngredient3);
+            JsonWriter writer = new JsonWriter("./data/pantryTestPantryToJson.json");
+            writer.open();
+            writer.write(testPantry);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/pantryTestPantryToJson.json");
+            testPantry = reader.read();
+            assertEquals(3, testPantry.getPantrySize());
+            assertTrue(testPantry.doesPantryContain("tomatoes"));
+            assertTrue(testPantry.doesPantryContain("cherries"));
+            assertTrue(testPantry.doesPantryContain("bread"));
+            assertEquals(0, testPantry.toBuyToGroceryList().size());
+        } catch (IOException e) {
+            fail("Was not expecting IOException");
+        }
+    }
+
+    @Test
+    public void testGroceryListToJson() {
+        try {
+            testPantry.addIngredient(testIngredient1);
+            testPantry.addIngredient(testIngredient2);
+            testPantry.addIngredient(testIngredient3);
+            testIngredient1.setToBuyTrue();
+            testIngredient2.setToBuyTrue();
+            testIngredient3.setToBuyTrue();
+            assertEquals(3, testPantry.toBuyToGroceryList().size());
+            testPantry.removeIngredient("bread", 1);
+            JsonWriter writer = new JsonWriter("./data/pantryTestGroceryListToJson.json");
+            writer.open();
+            writer.write(testPantry);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/pantryTestGroceryListToJson.json");
+            testPantry = reader.read();
+            assertEquals(3, testPantry.toBuyToGroceryList().size());
+            assertTrue(testPantry.toBuyToGroceryList().contains("tomatoes"));
+            assertTrue(testPantry.toBuyToGroceryList().contains("cherries"));
+            assertTrue(testPantry.toBuyToGroceryList().contains("bread"));
+        } catch (IOException e) {
+            fail("Was not expecting IOException");
+        }
+    }
 }

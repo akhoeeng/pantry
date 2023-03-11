@@ -12,10 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // JSON Writer Test Class
 public class JsonWriterTest extends JsonHelperTest {
-    private List<String> groceryList1 = new ArrayList<>();
-    private List<String> groceryList2 = new ArrayList<>();
-    private List<String> groceryList3 = new ArrayList<>();
-    private List<String> groceryList4 = new ArrayList<>();
     private Ingredient tiramisu = new Ingredient("tiramisu", 2);
     private Ingredient vanilla = new Ingredient("vanilla", 1);
     private Ingredient avocados = new Ingredient("avocados", 5);
@@ -64,7 +60,6 @@ public class JsonWriterTest extends JsonHelperTest {
             pantry = reader.read();
             assertEquals(0, pantry.toBuyToGroceryList().size());
             assertEquals(2, pantry.getPantrySize());
-            assertEquals(vanilla, pantry.getIngredientAtIndex(0));
             checkIngredient("tiramisu", 2, pantry.getIngredientAtIndex(1));
             checkIngredient("vanilla", 1, pantry.getIngredientAtIndex(0));
         } catch (IOException e) {
@@ -122,17 +117,14 @@ public class JsonWriterTest extends JsonHelperTest {
         assertEquals(2, pantry.getPantrySize());
         checkIngredient("vanilla", 1, pantry.getIngredientAtIndex(0));
         checkIngredient("tiramisu", 2, pantry.getIngredientAtIndex(1));
+        assertFalse(pantry.doesPantryContain("avocados"));
         assertEquals(3, pantry.toBuyToGroceryList().size());
         assertTrue(pantry.toBuyToGroceryList().contains("vanilla"));
         assertTrue(pantry.toBuyToGroceryList().contains("tiramisu"));
-        assertFalse(pantry.toBuyToGroceryList().contains("avocados"));
+        assertTrue(pantry.toBuyToGroceryList().contains("avocados"));
     } catch (IOException e) {
         fail("Was not expecting IOException");
     }
-
-
-
-
     }
 
 }

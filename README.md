@@ -32,3 +32,6 @@ As a user, I want to be able to...
 - flag an ingredient in my pantry as "to buy" and add it to my grocery list
 - have the option to save my pantry and grocery list to file 
 - have the option to load my pantry and grocery list from file 
+
+Citations:
+https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git

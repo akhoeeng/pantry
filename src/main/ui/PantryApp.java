@@ -2,10 +2,12 @@ package ui;
 
 import model.Ingredient;
 import model.Pantry;
+import org.json.JSONObject;
 import presistence.JsonReader;
 import presistence.JsonWriter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -184,11 +186,29 @@ public class PantryApp {
 
     // EFFECTS: saves the user's current pantry and grocery list to file
     private void doSavePantryToFile() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(newPantry);
+            jsonWriter.close();
+            System.out.println("Your pantry and grocery list were successfully saved to file: " + JSON_STORE + " !");
+        } catch (FileNotFoundException e) {
+            System.out.println("Oops! Unable to save pantry and grocery list to file " + JSON_STORE);
+        }
     }
 
     // EFFECTS: loads the pantry and grocery list from file
     private void doLoadPantryFromFile() {
-
+        try {
+            newPantry = jsonReader.read();
+            for (String s : newPantry.makeListOfNames()) {
+                if (!ingredientNames.contains(s)) {
+                    ingredientNames.add(s);
+                }
+            }
+            System.out.println("Your pantry and grocery list were successfully loaded from file: " + JSON_STORE + " !");
+        } catch (IOException e) {
+            System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);
+        }
     }
 }
 

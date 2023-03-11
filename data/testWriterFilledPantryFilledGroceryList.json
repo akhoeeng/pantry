@@ -1,0 +1,17 @@
+{
+    "pantry": [
+        {
+            "amount": 1,
+            "name": "vanilla"
+        },
+        {
+            "amount": 2,
+            "name": "tiramisu"
+        }
+    ],
+    "grocery list": [
+        {"name": "vanilla"},
+        {"name": "tiramisu"},
+        {"name": "avocados"}
+    ]
+}

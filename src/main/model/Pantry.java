@@ -89,6 +89,15 @@ public class Pantry implements Writable {
         return false;
     }
 
+    // EFFECTS: makes a list of names of all the ingredients currently in the pantry and returns it
+    public List<String> makeListOfNames() {
+        List<String> listOfNames = new ArrayList<>();
+        for (Ingredient i : pantry) {
+            listOfNames.add(i.getName());
+        }
+        return listOfNames;
+    }
+
     // MODIFIES: this
     // EFFECTS: adds ingredients marked to buy to the given grocery list without duplicates and returns it
     public List<String> toBuyToGroceryList() {
