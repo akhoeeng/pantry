@@ -34,4 +34,7 @@ As a user, I want to be able to...
 - have the option to load my pantry and grocery list from file 
 
 Citations:
-https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+- https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+- Red Apple image: https://commons.wikimedia.org/wiki/File:Red_Apple.jpg 
+- Shopping Basket image: https://commons.wikimedia.org/wiki/File:Shopping-basket.svg
+- Green Checkmark image: https://commons.wikimedia.org/wiki/File:Eo_circle_green_white_checkmark.svg

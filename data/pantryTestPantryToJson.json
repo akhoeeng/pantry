@@ -1,0 +1,17 @@
+{
+    "pantry": [
+        {
+            "amount": 3,
+            "name": "tomatoes"
+        },
+        {
+            "amount": 2,
+            "name": "cherries"
+        },
+        {
+            "amount": 1,
+            "name": "bread"
+        }
+    ],
+    "grocery list": []
+}
