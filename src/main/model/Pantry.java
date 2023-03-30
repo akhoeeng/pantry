@@ -25,6 +25,10 @@ public class Pantry implements Writable {
         return this.groceryList;
     }
 
+    public List<Ingredient> getPantry() {
+        return this.pantry;
+    }
+
     // REQUIRES: ingredient name must have non-zero length and amount > 0
     // MODIFIES: this
     // EFFECTS: adds amount of given ingredient to amount of the ingredient already in

@@ -35,6 +35,7 @@ public class MyFrame extends JFrame implements ActionListener {
         this.setLayout(new FlowLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         addButtons();
+        initializePantryReaderAndWriter();
         this.setVisible(true);
     }
 
@@ -62,7 +63,7 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
             JFrame nameFrame = new JFrame();
-            initializeFramePantryReaderAndWriter(nameFrame);
+            setUpNewWindow(nameFrame);
             textField = new JTextField();
             textField.setPreferredSize(new Dimension(200, 30));
             nameFrame.add(textField);
@@ -81,8 +82,8 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets up the new window to enter ingredient name
-    public void initializeFramePantryReaderAndWriter(JFrame jframe) {
+    // EFFECTS: sets up the new window for entering ingredient name
+    public void setUpNewWindow(JFrame jframe) {
         jframe.setSize(2000, 200);
         jframe.setLayout(new FlowLayout());
         jframe.setVisible(true);
@@ -90,6 +91,11 @@ public class MyFrame extends JFrame implements ActionListener {
         submit = new JButton("Submit Name");
         submit.addActionListener(this);
         jframe.add(submit);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: initializes the pantry, JSON writer and JSON reader
+    public void initializePantryReaderAndWriter() {
         pantry = new Pantry();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -98,6 +104,7 @@ public class MyFrame extends JFrame implements ActionListener {
     //MODIFIES: this
     //EFFECTS: saves ingredients in GUI to a new pantry, then saves that pantry to JSON file
     public void saveGUItoFile() {
+        pantry.getPantry().clear();
         for (Component c : this.getContentPane().getComponents()) {
             if (c instanceof JPanel && c.isVisible()) {
                 JPanel currentPanel = (JPanel) c;
@@ -140,6 +147,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 }
                 n++;
             }
+            this.revalidate();
+            this.repaint();
             System.out.println("Your pantry and grocery list were successfully loaded from file: " + JSON_STORE + " !");
         } catch (IOException e) {
             System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);

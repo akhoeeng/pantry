@@ -1,17 +1,7 @@
 {
-    "pantry": [
-        {
-            "amount": 3,
-            "name": "ariana"
-        },
-        {
-            "amount": 2,
-            "name": "nicki"
-        },
-        {
-            "amount": 2,
-            "name": "jessie"
-        }
-    ],
+    "pantry": [{
+        "amount": 1,
+        "name": "apple"
+    }],
     "grocery list": []
 }
