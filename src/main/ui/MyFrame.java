@@ -122,19 +122,23 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-   // EFFECTS: loads pantry from JSON file and displays ingredients in GUI
+    // EFFECTS: loads pantry from JSON file and displays ingredients in GUI
     public void loadGuiFromFile() {
         try {
             pantry = jsonReader.read();
-            for (String ingName : pantry.makeListOfNames()) {
-                Ingredient i = pantry.getIngredientAtIndex(pantry.getIndex(ingName));
-                ingredientList = new ArrayList<>();
-                ingredientList.add(i);
-            }
-            for (Ingredient ing : ingredientList) {
-                for (int n = 0; n < ing.getAmount(); n++) {
-                    makeApplePanel(ing.getName());
+            int n = 0;
+            while (n < pantry.getPantrySize()) {
+                String name = pantry.getIngredientAtIndex(n).getName();
+                int amount = pantry.getIngredientAtIndex(n).getAmount();
+                int numberOfPanels = 0;
+                while (numberOfPanels < amount) {
+                    NewApplePanel applePanel = new NewApplePanel();
+                    applePanel.getLabel().setText(name);
+                    this.add(applePanel);
+                    this.setVisible(true);
+                    numberOfPanels++;
                 }
+                n++;
             }
             System.out.println("Your pantry and grocery list were successfully loaded from file: " + JSON_STORE + " !");
         } catch (IOException e) {
@@ -142,13 +146,32 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: constructs new NewApplePanel and sets label as given string
-    public void makeApplePanel(String label) {
-        NewApplePanel applePanel = new NewApplePanel();
-        applePanel.getLabel().setText(label);
-        this.add(applePanel);
-        this.setVisible(true);
-    }
+
+//            for (String ingName : pantry.makeListOfNames()) {
+//                Ingredient i = pantry.getIngredientAtIndex(pantry.getIndex(ingName));
+//                ingredientList = new ArrayList<>();
+//                ingredientList.add(i);
+//            }
+//            for (Ingredient ing : ingredientList) {
+//                for (int n = 0; n < ing.getAmount(); n++) {
+//                    makeApplePanel(ing.getName());
+//                }
+//            }
+//            System.out.println("Your pantry and grocery list were successfully loaded from file:
+//            " + JSON_STORE + " !");
+//        } catch (IOException e) {
+//            System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);
+//        }
+//    }
+
+//    // MODIFIES: this
+//    // EFFECTS: constructs new NewApplePanel and sets label as given string
+//    public void makeApplePanel(String label) {
+//        NewApplePanel applePanel = new NewApplePanel();
+//        applePanel.getLabel().setText(label);
+//        this.add(applePanel);
+//        this.setVisible(true);
+//    }
 
 }
+

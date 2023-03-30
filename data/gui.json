@@ -2,11 +2,15 @@
     "pantry": [
         {
             "amount": 3,
-            "name": "apple"
+            "name": "ariana"
         },
         {
-            "amount": 3,
-            "name": "orange"
+            "amount": 2,
+            "name": "nicki"
+        },
+        {
+            "amount": 2,
+            "name": "jessie"
         }
     ],
     "grocery list": []
