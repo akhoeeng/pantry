@@ -2,6 +2,7 @@ package ui;
 
 import model.Ingredient;
 import model.Pantry;
+import presistence.JsonReader;
 import presistence.JsonWriter;
 
 import javax.swing.*;
@@ -9,6 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 // JFrame for Pantry
 public class MyFrame extends JFrame implements ActionListener {
@@ -17,9 +21,12 @@ public class MyFrame extends JFrame implements ActionListener {
     private JTextField textField;
     private String ingredientName;
     private JButton saveButton;
+    private JButton loadButton;
     private Pantry pantry;
+    private List<Ingredient> ingredientList;
     private static final String JSON_STORE = "./data/gui.json";
     private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // MODIFIES: this
     // EFFECTS: displays new JFrame window with buttons and an empty pantry
@@ -38,10 +45,14 @@ public class MyFrame extends JFrame implements ActionListener {
         addButton.setBounds(25, 25, 150, 50);
         addButton.addActionListener(this);
         this.add(addButton);
-        saveButton = new JButton("Save Pantry");
+        saveButton = new JButton("Save Current Pantry");
         saveButton.setBounds(25, 50, 150, 50);
         saveButton.addActionListener(this);
         this.add(saveButton);
+        loadButton = new JButton("Load Previously Saved Pantry");
+        loadButton.setBounds(25, 75, 150, 50);
+        loadButton.addActionListener(this);
+        this.add(loadButton);
     }
 
     // REQUIRES: ActionEvent is not null
@@ -51,7 +62,7 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
             JFrame nameFrame = new JFrame();
-            initializeFramePantryAndWriter(nameFrame);
+            initializeFramePantryReaderAndWriter(nameFrame);
             textField = new JTextField();
             textField.setPreferredSize(new Dimension(200, 30));
             nameFrame.add(textField);
@@ -62,15 +73,16 @@ public class MyFrame extends JFrame implements ActionListener {
             applePanel.getLabel().setText(ingredientName);
             this.add(applePanel);
             this.setVisible(true);
-            // addGuiToPantry(ingredientName);
         } else if (e.getSource() == saveButton) {
             saveGUItoFile();
+        } else if (e.getSource() == loadButton) {
+            loadGuiFromFile();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets up the new window to enter ingredient name
-    public void initializeFramePantryAndWriter(JFrame jframe) {
+    public void initializeFramePantryReaderAndWriter(JFrame jframe) {
         jframe.setSize(2000, 200);
         jframe.setLayout(new FlowLayout());
         jframe.setVisible(true);
@@ -80,24 +92,23 @@ public class MyFrame extends JFrame implements ActionListener {
         jframe.add(submit);
         pantry = new Pantry();
         jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
-//
-//    // MODIFIES: this
-//    // EFFECTS: adds ingredient from GUI to pantry
-//    public void addGuiToPantry(String name) {
-//        Ingredient ingredient = new Ingredient(name, 1);
-//        pantry.addIngredient(ingredient);
-//    }
-//
 
     //MODIFIES: this
-    // EFFECTS: saves ingredients in GUI to a new pantry, then saves that pantry to a JSON file
+    //EFFECTS: saves ingredients in GUI to a new pantry, then saves that pantry to JSON file
     public void saveGUItoFile() {
-        for (Component c : this.getComponents()) {
-            if (c instanceof JLabel) {
-                String name = ((JLabel) c).getText();
-                Ingredient ingredient = new Ingredient(name, 1);
-                pantry.addIngredient(ingredient);
+        for (Component c : this.getContentPane().getComponents()) {
+            if (c instanceof JPanel && c.isVisible()) {
+                JPanel currentPanel = (JPanel) c;
+                for (Component panelComp : currentPanel.getComponents()) {
+                    if (panelComp instanceof JLabel) {
+                        JLabel currentLabel = (JLabel) panelComp;
+                        String name = currentLabel.getText();
+                        Ingredient ingredient = new Ingredient(name, 1);
+                        pantry.addIngredient(ingredient);
+                    }
+                }
             }
         }
         try {
@@ -109,4 +120,35 @@ public class MyFrame extends JFrame implements ActionListener {
             System.out.println("Oops! Unable to save pantry and grocery list to file " + JSON_STORE);
         }
     }
+
+    // MODIFIES: this
+   // EFFECTS: loads pantry from JSON file and displays ingredients in GUI
+    public void loadGuiFromFile() {
+        try {
+            pantry = jsonReader.read();
+            for (String ingName : pantry.makeListOfNames()) {
+                Ingredient i = pantry.getIngredientAtIndex(pantry.getIndex(ingName));
+                ingredientList = new ArrayList<>();
+                ingredientList.add(i);
+            }
+            for (Ingredient ing : ingredientList) {
+                for (int n = 0; n < ing.getAmount(); n++) {
+                    makeApplePanel(ing.getName());
+                }
+            }
+            System.out.println("Your pantry and grocery list were successfully loaded from file: " + JSON_STORE + " !");
+        } catch (IOException e) {
+            System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: constructs new NewApplePanel and sets label as given string
+    public void makeApplePanel(String label) {
+        NewApplePanel applePanel = new NewApplePanel();
+        applePanel.getLabel().setText(label);
+        this.add(applePanel);
+        this.setVisible(true);
+    }
+
 }

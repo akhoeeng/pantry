@@ -1,7 +1,5 @@
 package ui;
 
-import model.Pantry;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +7,7 @@ import java.awt.event.ActionListener;
 
 // Class for each JPanel with apple image, remove button and label
 public class NewApplePanel extends JPanel implements ActionListener {
-    private String name;
-    private JLabel label = new JLabel();
+    private JLabel label;
     private JButton removeButton;
 
     // MODIFIES: this
@@ -18,7 +15,7 @@ public class NewApplePanel extends JPanel implements ActionListener {
     public NewApplePanel() {
         super();
         this.setBackground(Color.red);
-        this.label = label;
+        label = new JLabel();
         this.add(label);
         ImageIcon apple = new ImageIcon("data/210Project-Apple.jpeg");
         Image appleImg = apple.getImage();
@@ -44,9 +41,5 @@ public class NewApplePanel extends JPanel implements ActionListener {
             this.setVisible(false);
         }
     }
-
-//    public void removeGuiFromPantry(String name, Pantry pantry) {
-//
-//    }
 
 }

@@ -1,4 +1,13 @@
 {
-    "pantry": [],
+    "pantry": [
+        {
+            "amount": 3,
+            "name": "apple"
+        },
+        {
+            "amount": 3,
+            "name": "orange"
+        }
+    ],
     "grocery list": []
 }
