@@ -1,4 +1,4 @@
-# Personal Project: Phase 0
+# Personal Project
 
 ## Introduction
 
@@ -36,5 +36,16 @@ As a user, I want to be able to...
 Citations:
 - https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 - Red Apple image: https://commons.wikimedia.org/wiki/File:Red_Apple.jpg 
-- Shopping Basket image: https://commons.wikimedia.org/wiki/File:Shopping-basket.svg
-- Green Checkmark image: https://commons.wikimedia.org/wiki/File:Eo_circle_green_white_checkmark.svg
+
+
+
+# Instructions for Grader
+- You can generate the first required action related to adding an ingredient to the pantry by clicking the button 
+labelled "add ingredient", entering the ingredient name in the text field in the pop-up window and clicking the
+button labelled "submit name"
+- You can generate the second required action related to removing an ingredient from the pantry by clicking the button
+ labelled "X" in the panel corresponding to the ingredient you would like to remove
+- You can locate the visual component of my project when you add an ingredient to the pantry; an image of an apple
+will be displayed for each ingredient that is added (along with the label and remove button)
+- You can save the state of my application by clicking the "save current pantry" button
+- You can reload the state of my application by clicking the "load previously saved pantry" button

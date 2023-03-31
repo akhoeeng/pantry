@@ -1,13 +1,11 @@
 package ui;
 
-import model.Pantry;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// Class for each JPanel with apple image, remove button and label
+// JPanel representing an Ingredient; contains a label, remove button and image of an apple
 public class NewApplePanel extends JPanel implements ActionListener {
     private JLabel label;
     private JButton removeButton;
@@ -36,7 +34,7 @@ public class NewApplePanel extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: makes "this" not visible when removeButton is pressed
+    // EFFECTS: makes "this" not visible if removeButton is pressed, otherwise it does nothing
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == removeButton) {

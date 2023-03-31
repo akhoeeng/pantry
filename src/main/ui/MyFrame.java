@@ -11,10 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-// JFrame for Pantry
+// JFrame representing the Pantry
 public class MyFrame extends JFrame implements ActionListener {
     private JButton submit;
     private JButton addButton;
@@ -23,7 +21,6 @@ public class MyFrame extends JFrame implements ActionListener {
     private JButton saveButton;
     private JButton loadButton;
     private Pantry pantry;
-    private List<Ingredient> ingredientList;
     private static final String JSON_STORE = "./data/gui.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -56,7 +53,6 @@ public class MyFrame extends JFrame implements ActionListener {
         this.add(loadButton);
     }
 
-    // REQUIRES: ActionEvent is not null
     // MODIFIES: this
     // EFFECTS: performs different actions based on which buttons are pressed
     @Override
@@ -87,7 +83,7 @@ public class MyFrame extends JFrame implements ActionListener {
         jframe.setSize(2000, 200);
         jframe.setLayout(new FlowLayout());
         jframe.setVisible(true);
-        jframe.pack();
+        jframe.setBounds(0, 0, 200, 200);
         submit = new JButton("Submit Name");
         submit.addActionListener(this);
         jframe.add(submit);
@@ -154,33 +150,6 @@ public class MyFrame extends JFrame implements ActionListener {
             System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);
         }
     }
-
-
-//            for (String ingName : pantry.makeListOfNames()) {
-//                Ingredient i = pantry.getIngredientAtIndex(pantry.getIndex(ingName));
-//                ingredientList = new ArrayList<>();
-//                ingredientList.add(i);
-//            }
-//            for (Ingredient ing : ingredientList) {
-//                for (int n = 0; n < ing.getAmount(); n++) {
-//                    makeApplePanel(ing.getName());
-//                }
-//            }
-//            System.out.println("Your pantry and grocery list were successfully loaded from file:
-//            " + JSON_STORE + " !");
-//        } catch (IOException e) {
-//            System.out.println("Oops! Unable to load pantry and grocery list from file: " + JSON_STORE);
-//        }
-//    }
-
-//    // MODIFIES: this
-//    // EFFECTS: constructs new NewApplePanel and sets label as given string
-//    public void makeApplePanel(String label) {
-//        NewApplePanel applePanel = new NewApplePanel();
-//        applePanel.getLabel().setText(label);
-//        this.add(applePanel);
-//        this.setVisible(true);
-//    }
 
 }
 

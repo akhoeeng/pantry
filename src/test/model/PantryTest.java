@@ -31,6 +31,7 @@ public class PantryTest {
     @Test
     public void testPantryNoIngredientsAdded() {
         assertEquals(0, testPantry.getPantrySize());
+        assertEquals(0, testPantry.getPantry().size());
         assertFalse(testPantry.doesPantryContain("tomatoes"));
         assertEquals(-1, testPantry.getIndex("tomatoes"));
     }

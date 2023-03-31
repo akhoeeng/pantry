@@ -2,7 +2,6 @@ package ui;
 
 import model.Ingredient;
 import model.Pantry;
-import org.json.JSONObject;
 import presistence.JsonReader;
 import presistence.JsonWriter;
 
