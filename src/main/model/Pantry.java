@@ -11,8 +11,8 @@ import java.util.List;
 public class Pantry implements Writable {
     private final List<Ingredient> pantry;                           // a pantry which stores ingredients
     private final List<String> groceryList;                          // list of names of ingredients marked
-                                                                     // 'TO BUY' by the user; ingredients do not
-                                                                     //  have to currently be in the pantry
+    // 'TO BUY' by the user; ingredients do not
+    //  have to currently be in the pantry
 
     // EFFECTS: creates a new pantry with no ingredients added and a new grocery list with no
     // ingredient names added
@@ -40,6 +40,8 @@ public class Pantry implements Writable {
         } else {
             pantry.add(ingredient);
         }
+        EventLog.getInstance().logEvent(new Event("added " + ingredient.getAmount() + " "
+                + ingredient.getName() + " to pantry!"));
     }
 
     // REQUIRES: ingredient with the same name as the one given must be in the pantry
@@ -54,6 +56,8 @@ public class Pantry implements Writable {
         } else {
             getIngredientAtIndex(getIndex(ingredientName)).subtractAmount(amount);
         }
+        EventLog.getInstance().logEvent(new Event("removed " + amount + " "
+                + ingredientName + " from pantry!"));
     }
 
 
@@ -105,7 +109,7 @@ public class Pantry implements Writable {
     // MODIFIES: this
     // EFFECTS: adds ingredients marked to buy to the given grocery list without duplicates and returns it
     public List<String> toBuyToGroceryList() {
-        for (Ingredient i: pantry) {
+        for (Ingredient i : pantry) {
             if (i.getToBuy() && !this.groceryList.contains(i.getName())) {
                 this.groceryList.add(i.getName());
             }

@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Ingredient;
 import model.Pantry;
 import presistence.JsonReader;
@@ -31,6 +32,7 @@ public class MyFrame extends JFrame implements ActionListener {
         this.setSize(800, 800);
         this.setLayout(new FlowLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.addWindowListener(new MyWindowAdapter());
         addButtons();
         initializePantryReaderAndWriter();
         this.setVisible(true);
@@ -66,7 +68,9 @@ public class MyFrame extends JFrame implements ActionListener {
             textField.setText("Enter name of ingredient");
         } else if (e.getSource() == submit) {
             ingredientName = textField.getText();
-            NewApplePanel applePanel = new NewApplePanel();
+            Ingredient ingredient = new Ingredient(ingredientName, 1);
+            pantry.addIngredient(ingredient);
+            NewApplePanel applePanel = new NewApplePanel(pantry);
             applePanel.getLabel().setText(ingredientName);
             this.add(applePanel);
             this.setVisible(true);
@@ -98,22 +102,8 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     //MODIFIES: this
-    //EFFECTS: saves ingredients in GUI to a new pantry, then saves that pantry to JSON file
+    //EFFECTS: saves pantry to JSON file
     public void saveGUItoFile() {
-        pantry.getPantry().clear();
-        for (Component c : this.getContentPane().getComponents()) {
-            if (c instanceof JPanel && c.isVisible()) {
-                JPanel currentPanel = (JPanel) c;
-                for (Component panelComp : currentPanel.getComponents()) {
-                    if (panelComp instanceof JLabel) {
-                        JLabel currentLabel = (JLabel) panelComp;
-                        String name = currentLabel.getText();
-                        Ingredient ingredient = new Ingredient(name, 1);
-                        pantry.addIngredient(ingredient);
-                    }
-                }
-            }
-        }
         try {
             jsonWriter.open();
             jsonWriter.write(pantry);
@@ -135,7 +125,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 int amount = pantry.getIngredientAtIndex(n).getAmount();
                 int numberOfPanels = 0;
                 while (numberOfPanels < amount) {
-                    NewApplePanel applePanel = new NewApplePanel();
+                    NewApplePanel applePanel = new NewApplePanel(pantry);
                     applePanel.getLabel().setText(name);
                     this.add(applePanel);
                     this.setVisible(true);

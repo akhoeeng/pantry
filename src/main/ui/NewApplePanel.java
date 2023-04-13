@@ -1,5 +1,7 @@
 package ui;
 
+import model.Pantry;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,11 +11,13 @@ import java.awt.event.ActionListener;
 public class NewApplePanel extends JPanel implements ActionListener {
     private JLabel label;
     private JButton removeButton;
+    private Pantry pantry;
 
     // MODIFIES: this
     // EFFECTS: constructs new JPanel with label, apple image and remove button
-    public NewApplePanel() {
+    public NewApplePanel(Pantry pantry) {
         super();
+        this.pantry = pantry;
         this.setBackground(Color.red);
         label = new JLabel();
         this.add(label);
@@ -34,12 +38,19 @@ public class NewApplePanel extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: makes "this" not visible if removeButton is pressed, otherwise it does nothing
+    // EFFECTS: makes "this" not visible if removeButton is pressed and removes 1 of ingredient with the same name from
+    // pantry, otherwise it does nothing
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == removeButton) {
-            this.setVisible(false);
+            for (Component panelComp : this.getComponents()) {
+                if (panelComp instanceof JLabel) {
+                    JLabel currentLabel = (JLabel) panelComp;
+                    String name = currentLabel.getText();
+                    pantry.removeIngredient(name, 1);
+                    this.setVisible(false);
+                }
+            }
         }
     }
-
 }
