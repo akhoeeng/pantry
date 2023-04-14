@@ -39,7 +39,7 @@ Citations:
 
 
 
-# Instructions for Grader
+## Instructions for Grader
 - You can generate the first required action related to adding an ingredient to the pantry by clicking the button 
 labelled "add ingredient", entering the ingredient name in the text field in the pop-up window and clicking the
 button labelled "submit name"
@@ -49,3 +49,20 @@ button labelled "submit name"
 will be displayed for each ingredient that is added (along with the label and remove button)
 - You can save the state of my application by clicking the "save current pantry" button
 - You can reload the state of my application by clicking the "load previously saved pantry" button
+
+## Phase 4: Task 2
+
+Thu Apr 13 14:40:33 PDT 2023
+added 1 apple to pantry!
+
+
+Thu Apr 13 14:40:38 PDT 2023
+added 1 orange to pantry!
+
+
+Thu Apr 13 14:40:44 PDT 2023
+removed 1 orange from pantry!
+
+
+Thu Apr 13 14:40:44 PDT 2023
+removed 1 apple from pantry!

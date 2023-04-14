@@ -1,6 +1,5 @@
 package ui;
 
-import model.EventLog;
 import model.Ingredient;
 import model.Pantry;
 import presistence.JsonReader;

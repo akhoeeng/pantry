@@ -1,4 +1,7 @@
 {
-    "pantry": [],
+    "pantry": [{
+        "amount": 1,
+        "name": "orange"
+    }],
     "grocery list": []
 }
