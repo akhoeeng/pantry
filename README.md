@@ -66,3 +66,11 @@ removed 1 orange from pantry!
 
 Thu Apr 13 14:40:44 PDT 2023
 removed 1 apple from pantry!
+
+## Phase 4: Task 3
+
+After analyzing the MyFrame class, I noticed that it is responsible for quite a few actions.
+It handles everything relating to the main JFrame of the GUI as well as everything relating to the pop-up 
+text field JFrame when the "add ingredient" button is pressed. I could refactor the MyFrame class by splitting it up
+into 2 classes so that a separate class handles the pop-up text field JFrame operations. This would increase cohesion 
+as the new MyFrame class would now only be responsible for one thing, as desired.
