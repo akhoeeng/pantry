@@ -1,4 +1,4 @@
-# Personal Project
+# Pantry
 
 ## Introduction
 
@@ -29,7 +29,7 @@ As a user, I want to be able to...
 - remove an ingredient (e.g. a carrot) and its amount from my virtual pantry and see how much I have left
   of the ingredient
 - view a list of the names of all ingredients in my virtual pantry 
-- flag an ingredient in my pantry as "to buy" and add it to my grocery list
+- flag an ingredient in my pantry as "to buy" and add it to my grocery list (console only)
 - have the option to save my pantry and grocery list to file 
 - have the option to load my pantry and grocery list from file 
 
@@ -39,7 +39,7 @@ Citations:
 
 
 
-## Instructions for Grader
+## Instructions
 - You can generate the first required action related to adding an ingredient to the pantry by clicking the button 
 labelled "add ingredient", entering the ingredient name in the text field in the pop-up window and clicking the
 button labelled "submit name"
